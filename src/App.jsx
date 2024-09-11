@@ -1,16 +1,22 @@
 import { useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
 function Timer() {
-  const [count, setCount] = useState(10)
+  const [count, setCount] = useState(3)
 
   useEffect(() => {
     const timerId = setInterval(() => {
-      setCount((count) => count - 1);
+      if (count > 0) {
+        console.log(count);
+        setCount((prevCount) => prevCount - 1);
+      } else {
+        clearInterval(timerId);
+        console.log('Countdown complete!');
+      }
     }, 1000);
-  }, []);
+  
+    return () => clearInterval(timerId); // Cleanup on unmount
+  }, [count]); 
 
   return (
   <main>
